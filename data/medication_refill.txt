@@ -1,0 +1,12 @@
+Medication Refill Policy - Mindbowser Demo Clinic
+
+Patients may request medication refills through the patient portal, phone nurse line, or during an office visit.
+
+Controlled substances require an in-person evaluation before refill in most cases. Non-controlled maintenance medicines may be refilled after chart review.
+
+Refill requests are processed within 2 business days. Patients should request refills before their supply runs out.
+
+Pharmacies: Refills are sent electronically to the pharmacy on file. Patients may change pharmacy through the portal.
+
+If a medication dose change is needed, the clinician must update the prescription before a refill is approved.
+

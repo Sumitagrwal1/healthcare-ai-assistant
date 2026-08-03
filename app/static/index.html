@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Healthcare AI Assistant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #e8f0ec;
+      --ink: #1a2e28;
+      --muted: #5a7268;
+      --panel: #f7fbf8;
+      --line: #c5d6ce;
+      --accent: #0f6b54;
+      --accent-soft: #d7eee6;
+      --warn: #8a4b12;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "DM Sans", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(ellipse 80% 50% at 10% 0%, #cfe8dc 0%, transparent 55%),
+        radial-gradient(ellipse 60% 40% at 100% 100%, #d9e4f0 0%, transparent 50%),
+        var(--bg);
+    }
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 2.5rem 1.25rem 4rem;
+    }
+    h1 {
+      font-family: "Fraunces", serif;
+      font-size: clamp(1.8rem, 4vw, 2.4rem);
+      margin: 0 0 0.4rem;
+      letter-spacing: -0.02em;
+    }
+    .sub {
+      color: var(--muted);
+      margin: 0 0 1.75rem;
+      line-height: 1.45;
+    }
+    .steps {
+      display: grid;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 1.1rem;
+      margin-bottom: 1rem;
+    }
+    label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+    textarea {
+      width: 100%;
+      min-height: 96px;
+      resize: vertical;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+      font: inherit;
+      color: var(--ink);
+      background: #fff;
+    }
+    textarea:focus {
+      outline: 2px solid var(--accent);
+      outline-offset: 1px;
+    }
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 0.85rem;
+    }
+    button {
+      font: inherit;
+      font-weight: 500;
+      border: none;
+      border-radius: 999px;
+      padding: 0.7rem 1.2rem;
+      cursor: pointer;
+    }
+    .primary {
+      background: var(--accent);
+      color: #fff;
+    }
+    .secondary {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-top: 0.9rem;
+    }
+    .chip {
+      background: #fff;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.82rem;
+      padding: 0.4rem 0.75rem;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+    .chip:hover { border-color: var(--accent); color: var(--accent); }
+    #status {
+      min-height: 1.25rem;
+      margin: 0.4rem 0 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    #result { display: none; }
+    #result.show { display: block; }
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.9rem;
+    }
+    .tag {
+      font-size: 0.78rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+    .tag.warn { background: #f5e6d4; color: var(--warn); }
+    .answer {
+      white-space: pre-wrap;
+      line-height: 1.55;
+      margin: 0 0 1rem;
+    }
+    .sources h3 {
+      margin: 0 0 0.5rem;
+      font-size: 0.95rem;
+    }
+    .source {
+      border-top: 1px solid var(--line);
+      padding: 0.7rem 0;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .source strong { color: var(--ink); }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Healthcare AI Assistant</h1>
+    <p class="sub">Clinic policy Q&amp;A powered by FAISS retrieval, LangChain tools, and the Groq API. Load documents first, then ask a question.</p>
+
+    <div class="steps">
+      <div>1) Click <b>Load Docs</b> once to ingest the knowledge base</div>
+      <div>2) Type a question or pick a sample below</div>
+      <div>3) Click <b>Ask</b> to see the answer and sources</div>
+    </div>
+
+    <div class="panel">
+      <div class="row" style="margin-top:0">
+        <button class="secondary" type="button" id="ingestBtn">Load Docs</button>
+      </div>
+      <p id="status"></p>
+    </div>
+
+    <div class="panel">
+      <label for="q">Your question</label>
+      <textarea id="q" placeholder="Type your question here..."></textarea>
+      <div class="chips">
+        <button class="chip" type="button" data-q="Can a patient request a medication refill through telehealth?">Telehealth refill</button>
+        <button class="chip" type="button" data-q="How soon must a privacy breach be reported?">Privacy breach</button>
+        <button class="chip" type="button" data-q="Can I book a cardiology appointment for Monday?">Book appointment</button>
+        <button class="chip" type="button" data-q="What is the clinic Wi-Fi password?">Unknown (Wi-Fi)</button>
+      </div>
+      <div class="row">
+        <button class="primary" type="button" id="askBtn">Ask</button>
+      </div>
+    </div>
+
+    <div class="panel" id="result">
+      <div class="meta">
+        <span class="tag" id="routeTag"></span>
+        <span class="tag" id="confTag"></span>
+      </div>
+      <p class="answer" id="answer"></p>
+      <div class="sources">
+        <h3>Sources</h3>
+        <div id="sources"></div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const statusEl = document.getElementById("status");
+    const resultEl = document.getElementById("result");
+    const qEl = document.getElementById("q");
+
+    document.querySelectorAll(".chip").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        qEl.value = btn.dataset.q;
+      });
+    });
+
+    document.getElementById("ingestBtn").addEventListener("click", async () => {
+      statusEl.textContent = "Loading documents...";
+      try {
+        const res = await fetch("/ingest", { method: "POST" });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.detail || "Ingest failed");
+        statusEl.textContent = `Ready — ${data.files} files, ${data.chunks} chunks loaded.`;
+      } catch (e) {
+        statusEl.textContent = "Error: " + e.message;
+      }
+    });
+
+    document.getElementById("askBtn").addEventListener("click", async () => {
+      const question = qEl.value.trim();
+      if (question.length < 3) {
+        statusEl.textContent = "Please type a longer question.";
+        return;
+      }
+      statusEl.textContent = "Thinking...";
+      resultEl.classList.remove("show");
+      try {
+        const res = await fetch("/ask", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ question }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.detail || "Ask failed");
+
+        document.getElementById("answer").textContent = data.answer;
+        document.getElementById("routeTag").textContent = "Route: " + (data.route || "rag");
+        const conf = document.getElementById("confTag");
+        conf.textContent = "Confidence: " + (data.confidence || "-");
+        conf.className = "tag" + (data.confidence === "low" ? " warn" : "");
+
+        const box = document.getElementById("sources");
+        box.innerHTML = "";
+        if (!data.sources || !data.sources.length) {
+          box.innerHTML = "<div class='source'>No sources (answer not in documents).</div>";
+        } else {
+          data.sources.forEach((s) => {
+            const div = document.createElement("div");
+            div.className = "source";
+            div.innerHTML = `<strong>${s.document}</strong><br>${s.chunk}`;
+            box.appendChild(div);
+          });
+        }
+        resultEl.classList.add("show");
+        statusEl.textContent = "Done.";
+      } catch (e) {
+        statusEl.textContent = "Error: " + e.message;
+      }
+    });
+  </script>
+</body>
+</html>

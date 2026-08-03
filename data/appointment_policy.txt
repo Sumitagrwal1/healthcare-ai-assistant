@@ -1,0 +1,12 @@
+Appointment Scheduling Policy - Mindbowser Demo Clinic
+
+Patients may book appointments by phone, patient portal, or at the front desk. Same-day urgent slots are released at 8:00 AM.
+
+New patients should arrive 20 minutes early to complete registration. Existing patients should arrive 10 minutes early.
+
+Cancellation: Appointments must be cancelled at least 24 hours in advance. Late cancellations or no-shows may incur a fee.
+
+Cardiology, dermatology, and general medicine departments accept online booking. Specialty referrals require a primary care note.
+
+Rescheduling is allowed twice without penalty. A third reschedule may require supervisor approval.
+

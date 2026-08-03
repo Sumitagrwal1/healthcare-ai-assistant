@@ -1,0 +1,11 @@
+HIPAA Privacy Guidelines - Mindbowser Demo Clinic
+
+Breach response: Suspected unauthorized access must be reported to the Privacy Officer within 24 hours.
+
+Protected Health Information (PHI) includes names, medical records, billing details, and any data that can identify a patient.
+
+Staff may share PHI only with the care team and authorized individuals listed on the patient's release form. Never discuss PHI in public areas.
+
+Patients may request a copy of their medical records. Requests are fulfilled within 30 days. Identity verification is required.
+
+Electronic access: Patient portal accounts must use unique passwords. Staff must lock screens when leaving a workstation.

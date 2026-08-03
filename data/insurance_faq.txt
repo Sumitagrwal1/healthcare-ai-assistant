@@ -1,0 +1,12 @@
+Insurance Eligibility FAQ - Mindbowser Demo Clinic
+
+Insurance eligibility is verified before every visit. Patients should bring a current insurance card and photo ID.
+
+Coverage: Most plans cover annual wellness visits. Specialist visits may require prior authorization. Copays are due at check-in.
+
+Self-pay: Uninsured patients may request a self-pay estimate before service. Payment plans are available for balances over $200.
+
+Denied claims: If a claim is denied, billing staff will contact the patient within 10 business days and explain appeal options.
+
+Out-of-network: Services from out-of-network providers may not be covered. Patients should confirm network status before booking.
+

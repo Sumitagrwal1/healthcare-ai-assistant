@@ -1,0 +1,11 @@
+Telehealth Consultation Guidelines - Mindbowser Demo Clinic
+
+Medication refill requests may be reviewed during telehealth visits when the medication is already prescribed and does not require an in-person evaluation. Patients can request a medication refill through telehealth in those cases.
+
+Telehealth visits are available for follow-up care, medication review, and many non-emergency concerns. A stable internet connection and private space are required.
+
+Identity check: Patients must show a photo ID at the start of the video visit. Visits may be cancelled if identity cannot be verified.
+
+Not suitable for telehealth: severe chest pain, stroke symptoms, major trauma, or any emergency. Patients should call emergency services instead.
+
+Consent: Patients must agree to telehealth consent before the visit begins. A visit summary is added to the electronic health record after the consultation.
